@@ -24,5 +24,10 @@ namespace Community_Watcher
 
             this.Close();
         }
+
+        private void frmReportIssue_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

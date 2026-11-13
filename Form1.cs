@@ -16,17 +16,17 @@ namespace Community_Watcher
 
         private void btnAnnouncements_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Under Constuction", "Warning",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning);
+            announcements announcementsForm = new announcements();
+            announcementsForm.Show();
+            this.Hide();
         }
 
         private void btnServiceRequest_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Under Constuction",
-            "Warning",MessageBoxButtons.OK,
-            MessageBoxIcon.Warning);
-           
+            ServiceRequestStatus serviceRequestStatus = new ServiceRequestStatus();
+            serviceRequestStatus.Show();
+            this.Hide();    
+
         }
 
     }

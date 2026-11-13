@@ -4,10 +4,9 @@ namespace Community_Watcher
 {
     partial class frmReportIssue
     {
-       
         private System.ComponentModel.IContainer components = null;
+        private static readonly Random _random = new Random();
 
-       
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
@@ -20,7 +19,6 @@ namespace Community_Watcher
 
         #region Windows Form Designer generated code
 
-      
         private void InitializeComponent()
         {
             btnMainMenu = new Button();
@@ -203,6 +201,7 @@ namespace Community_Watcher
             Controls.Add(btnMainMenu);
             Name = "frmReportIssue";
             Text = "Report Issue";
+            Load += frmReportIssue_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -256,13 +255,80 @@ namespace Community_Watcher
 
             lstViewRecentIssues.Items.Insert(0, item);
 
+            // Assign random status and push to StatusRepository for Task 3 tracking
+            RequestStatus randomStatus = GetRandomStatus();
+            int priority = GetPriorityByCategory(issue.Category);
+            string depot = AssignDepotByLocation(issue.Location);
+
+            StatusRepository.AddRequest(
+                issue.Id,
+                issue.Category,
+                issue.Location,
+                issue.Description,
+                issue.DateReported,
+                randomStatus,
+                priority,
+                depot
+            );
+
+            string statusText = FormatStatus(randomStatus);
+
             MessageBox.Show(
-                string.Format("Thank you! Your report (Reference #{0}) has been submitted successfully.", issue.Id),
+                string.Format("Thank you! Your report (Reference #{0}) has been submitted successfully.\n\nAssigned Status: {1}", issue.Id, statusText),
                 "Report Submitted",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
             ClearForm();
+        }
+
+        private RequestStatus GetRandomStatus()
+        {
+            RequestStatus[] statuses =
+            {
+                RequestStatus.AssignedToEngineer,
+                RequestStatus.InProgress,
+                RequestStatus.PendingApproval,
+                RequestStatus.Completed
+            };
+
+            return statuses[_random.Next(statuses.Length)];
+        }
+
+        private string FormatStatus(RequestStatus status)
+        {
+            return status switch
+            {
+                RequestStatus.AssignedToEngineer => "Assigned to Engineer",
+                RequestStatus.InProgress => "In Progress",
+                RequestStatus.PendingApproval => "Pending Approval",
+                RequestStatus.Completed => "Completed",
+                _ => status.ToString()
+            };
+        }
+
+        private int GetPriorityByCategory(string category)
+        {
+            return category switch
+            {
+                "Water & Sanitation" => 1,
+                "Electricity" => 1,
+                "Public Safety" => 2,
+                "Waste Management" => 2,
+                "Traffic & Signage" => 2,
+                _ => 3
+            };
+        }
+
+        private string AssignDepotByLocation(string location)
+        {
+            string locLower = location.ToLower();
+
+            if (locLower.Contains("mamelodi")) return "Depot Beta";
+            if (locLower.Contains("centurion")) return "Depot Gamma";
+            if (locLower.Contains("soshanguve")) return "Depot Delta";
+
+            return "Depot Alpha";
         }
 
         public void ClearForm()

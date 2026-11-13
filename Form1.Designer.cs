@@ -48,7 +48,7 @@
             // 
             // btnAnnouncements
             // 
-            btnAnnouncements.BackColor = SystemColors.ActiveBorder;
+            btnAnnouncements.BackColor = SystemColors.Highlight;
             btnAnnouncements.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAnnouncements.Location = new Point(178, 111);
             btnAnnouncements.Name = "btnAnnouncements";
@@ -60,7 +60,7 @@
             // 
             // btnServiceRequest
             // 
-            btnServiceRequest.BackColor = SystemColors.ActiveBorder;
+            btnServiceRequest.BackColor = Color.LimeGreen;
             btnServiceRequest.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnServiceRequest.Location = new Point(395, 109);
             btnServiceRequest.Name = "btnServiceRequest";
